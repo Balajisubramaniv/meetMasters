@@ -14,15 +14,27 @@ function randomID(len) {
     return result;
   }
   
+  export function getUrlParams(
+    url = window.location.href
+  ) {
+    let urlStr = url.split('?')[1];
+    return new URLSearchParams(urlStr);
+  }
+
+
 
   export const InitiateCall = () => {
-
-    const roomID = randomID(5);
+    
+    const roomID = getUrlParams().get('roomId') || randomID(5);
+    const userID = getUrlParams().get('userId') || randomID(5);   
+    const userName = getUrlParams().get('userName') || randomID(5); 
+    debugger
     let myMeeting = async (element) => {
    // generate Kit Token
     const appID = 460868068;
     const serverSecret = "04ee93015657cf7c70fc3e3c17fbf619";
-    const kitToken =  ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID,  randomID(5),  randomID(5));
+    
+    const kitToken =  ZegoUIKitPrebuilt.generateKitTokenForTest(appID, "04ee93015657cf7c70fc3e3c17fbf619", roomID,  userID, userName );
 
   
         // Create instance object from Kit Token.
@@ -36,12 +48,12 @@ function randomID(len) {
             url:
             window.location.protocol + '//' + 
             window.location.host + window.location.pathname +
-                '?roomID=' +
+                '?roomId=' +
                 roomID,
             },
         ],
         scenario: {
-            mode: ZegoUIKitPrebuilt.GroupCall, // To implement 1-on-1 calls, modify the parameter here to [ZegoUIKitPrebuilt.OneONoneCall].
+            mode: ZegoUIKitPrebuilt.OneONoneCall, // To implement 1-on-1 calls, modify the parameter here to [ZegoUIKitPrebuilt.OneONoneCall].
         },
         });
 
