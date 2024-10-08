@@ -1,12 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {Route, Routes } from 'react-router-dom';
+import {Home}  from './components/Home';
+import  {ConnectCall}  from './components/ConnectCall';
+import  {InitiateCall}  from './components/InitiateCall';
+
+
 
 function App() {
   return (
-    <div className="App">
-      <h1>Meet Masters</h1>
-    </div>
-  );
+      <Routes>
+          <Route index path="/"  element={<Home/>}></Route>
+          <Route path="/connectCall" element={<ConnectCall/>}></Route>
+          <Route path="/initiateCall" element={<InitiateCall/>}></Route>
+      </Routes>  
+  )
 }
 
 export default App;
